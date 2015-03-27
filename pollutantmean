@@ -1,0 +1,22 @@
+# Given a dataset of pollutant concentrations in 332 CSVs, find the mean pollutant concentration for the desired CSV files
+
+pollutantmean <- function(directory,pollutant,id) {
+  completeFiles <- list.files(path=directory)
+  use <- id
+  specificFiles <- completeFiles[use]
+  allVector <- numeric()
+  for(file in specificFiles) {
+    tempFrame = read.csv(file=paste(directory,"/",file, sep=""),header=T,sep=",")
+    for(entry in 1:nrow(tempFrame)) {
+      if(pollutant == "sulfate") {
+        allVector <- c(allVector, tempFrame$sulfate[[entry]])
+      }
+      else {
+        allVector <- c(allVector, tempFrame$nitrate[[entry]])
+      }
+    }
+  }
+  TFVector <- !is.na(allVector)
+  returnVector <- allVector[TFVector]
+  mean(returnVector)
+}
