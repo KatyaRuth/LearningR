@@ -1,0 +1,28 @@
+# Given a set of CSVs with pollution information for two distinct pollutants, calculate the correlation between the
+# two pollutants. You can also set a threshold for a minimum number of entries in a file to ensure that the correlation
+# returned is robust.
+
+corr <- function(directory, threshold = 0) {
+  completeFiles <- dir(path=directory)
+  corvector <- numeric()
+  for(file in completeFiles) {
+    counter <- 0
+    svector <- numeric()
+    nvector <- numeric()
+    tempFrame = read.csv(file=paste(directory,"/",file, sep=""),header=T,sep=",")
+    for(entry in 1:nrow(tempFrame)){
+      if(!is.na(tempFrame$sulfate[[entry]]) & !is.na(tempFrame$nitrate[[entry]])) {
+        counter <- counter + 1
+      }
+    }
+    if(counter >= threshold) {
+        for(entry in 1:nrow(tempFrame)){
+        svector <- c(svector, tempFrame$sulfate[[entry]])
+        nvector <- c(nvector, tempFrame$nitrate[[entry]])
+      }
+      tempCor <- cor(svector,nvector)
+      corvector <- c(corvector, tempCor)
+    }
+  }
+  print(corvector)
+}
