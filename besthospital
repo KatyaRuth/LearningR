@@ -1,0 +1,27 @@
+# Given a state and a certain condition, find the hospital in that state with the lowest mortality
+# rate for that condition.
+
+besthospital <- function(state, outcome) {
+    frame <- read.csv("R3Assignment/outcome-of-care-measures.csv", colClasses="character")
+    state <- toupper(state)
+    stateSub <- subset(frame, frame$State == state)
+    if(tolower(outcome) == "heart attack") {
+         heartVec <- stateSub$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack
+         indexMin <- which.min(heartVec)
+         print(stateSub$Hospital.Name[[indexMin]])
+    }
+    else if(tolower(outcome) == "heart failure") {
+        heartVec <- stateSub$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure
+        indexMin <- which.min(heartVec)
+        print(stateSub$Hospital.Name[[indexMin]])
+    }
+    else if (tolower(outcome) == "pneumonia") {
+        heartVec <- stateSub$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia
+        indexMin <- which.min(heartVec)
+        print(stateSub$Hospital.Name[[indexMin]])
+    }
+    else {
+        print("I'm sorry, I don't recognize that condition.")
+    }
+}
+
