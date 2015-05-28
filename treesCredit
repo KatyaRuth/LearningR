@@ -1,3 +1,8 @@
+## The majority of this code comes from "Machine Learning with R" by Brett Lantz from Packt Publishing.
+## This code uses trees from the C50 package to build a tree for classifying whether or not a person will default on a loan
+## Learning to use C50 for the first time.
+
+
 credit <- read.csv("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 5/credit.csv")
 
 set.seed(12345)
