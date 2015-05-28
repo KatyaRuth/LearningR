@@ -39,3 +39,16 @@ convert_counts <- function(x) {
 
 sms_train <- apply(sms_train, MARGIN=2, convert_counts)
 sms_test <- apply(sms_test, MARGIN=2, convert_counts)
+
+install.packages("e1071")
+library(e1071)
+
+sms_classifier <- naiveBayes(sms_train, sms_raw_train$type)
+sms_test_pred <- predict(sms_classifier, sms_test)
+CrossTable(sms_test_pred, sms_raw_test$type, prop.chisq = F, prop.t = F,
+           dnn = c("Predicted", "Actual"))
+
+sms_classifier2 <- naiveBayes(sms_train, sms_raw_train$type, laplace = 1)
+sms_test_pred2 <- predict(sms_classifier2, sms_test)
+CrossTable(sms_test_pred2, sms_raw_test$type, prop.chisq = F, prop.t = F,
+           dnn = c("Predicted", "Actual"))
