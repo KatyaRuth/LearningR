@@ -1,0 +1,34 @@
+## The majority of this code comes from "Machine Learning with R" by Brett Lantz from Packt Publishing.
+## However, quite a bit of the code was outdated.
+## Learning to use tm package for the first time.
+
+sms_raw <- read.csv("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 4/sms_spam.csv", stringsAsFactors=F)
+
+sms_raw$type <- factor(sms_raw$type)
+
+sms_corpus <- Corpus(VectorSource(sms_raw$text))
+
+corpus_clean <- tm_map(sms_corpus, content_transformer(tolower))
+corpus_clean <- tm_map(corpus_clean, removeNumbers)
+corpus_clean <- tm_map(corpus_clean, removeWords, stopwords())
+corpus_clean <- tm_map(corpus_clean, removePunctuation)
+corpus_clean <- tm_map(corpus_clean, stripWhitespace)
+
+sms_dtm <- DocumentTermMatrix(corpus_clean)
+
+sms_raw_train <- sms_raw[1:4169,]
+sms_raw_test <- sms_raw[4170:5559,]
+sms_dtm_train <- sms_dtm[1:4169,]
+sms_dtm_test <- sms_dtm[4170:5559,]
+sms_corpus_train <- corpus_clean[1:4169,]
+sms_corpus_test <- corpus_clean[4170:5559,]
+
+sms_freq <- findFreqTerms(sms_dtm_train,5)
+sms_freqCorpus <- Corpus(VectorSource(sms_freq))
+sms_freqT <- DocumentTermMatrix(sms_freqCorpus)
+sms_dict <- Terms(sms_freqT)
+
+sms_train <- DocumentTermMatrix(sms_corpus_train, list(dictionary = sms_dict))
+sms_test <- DocumentTermMatrix(sms_corpus_test, list(dictionary = sms_dict))
+
+
