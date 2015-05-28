@@ -1,5 +1,5 @@
 ## The majority of this code comes from "Machine Learning with R" by Brett Lantz from Packt Publishing.
-## However, quite a bit of the code was outdated.
+## However, quite a bit of the code was outdated. I had to recode to deal with deprecated methods.
 ## Learning to use tm package for the first time.
 
 sms_raw <- read.csv("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 4/sms_spam.csv", stringsAsFactors=F)
@@ -20,8 +20,8 @@ sms_raw_train <- sms_raw[1:4169,]
 sms_raw_test <- sms_raw[4170:5559,]
 sms_dtm_train <- sms_dtm[1:4169,]
 sms_dtm_test <- sms_dtm[4170:5559,]
-sms_corpus_train <- corpus_clean[1:4169,]
-sms_corpus_test <- corpus_clean[4170:5559,]
+sms_corpus_train <- corpus_clean[1:4169]
+sms_corpus_test <- corpus_clean[4170:5559]
 
 sms_freq <- findFreqTerms(sms_dtm_train,5)
 sms_freqCorpus <- Corpus(VectorSource(sms_freq))
@@ -31,4 +31,11 @@ sms_dict <- Terms(sms_freqT)
 sms_train <- DocumentTermMatrix(sms_corpus_train, list(dictionary = sms_dict))
 sms_test <- DocumentTermMatrix(sms_corpus_test, list(dictionary = sms_dict))
 
+convert_counts <- function(x) {
+    x <- ifelse(x > 0, 1, 0)
+    x <- factor(x, levels= c(0,1), labels = c("No","Yes"))
+    return (x)
+}
 
+sms_train <- apply(sms_train, MARGIN=2, convert_counts)
+sms_test <- apply(sms_test, MARGIN=2, convert_counts)
