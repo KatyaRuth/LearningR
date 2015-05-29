@@ -1,3 +1,7 @@
+## The majority of this code comes from "Machine Learning with R" by Brett Lantz from Packt Publishing.
+## Learning to build (and visualize) regression trees using rpart and rpart.plot.
+
+
 wine <- read.csv("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 6/whitewines.csv")
 
 wine_train <- wine[1:3750,]
@@ -27,6 +31,3 @@ p.mp5 <- predict(m.m5p, wine_test)
 MAE(wine_test$quality, p.mp5)
 
 
-
-
-wine_reg <- lm(quality ~ ., data = wine)
