@@ -1,0 +1,32 @@
+wine <- read.csv("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 6/whitewines.csv")
+
+wine_train <- wine[1:3750,]
+wine_test <- wine[3751:4898,]
+
+install.packages("rpart")
+library(rpart)
+
+m.rpart <- rpart(quality ~ ., data=wine_train)
+
+install.packages("rpart.plot")
+library(rpart.plot)
+
+rpart.plot(m.rpart, digits = 3)
+rpart.plot(m.rpart, digits = 2, fallen.leaves = T, type = 1)
+
+p.rpart <- predict(m.rpart, wine_test)
+
+MAE <- function(actual, predicted) {
+    mean(abs(actual - predicted))
+}
+
+MAE(p.rpart, wine_test$quality)
+
+m.m5p <- M5P(quality ~ ., data=wine_train)
+p.mp5 <- predict(m.m5p, wine_test)
+MAE(wine_test$quality, p.mp5)
+
+
+
+
+wine_reg <- lm(quality ~ ., data = wine)
