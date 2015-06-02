@@ -1,0 +1,23 @@
+
+## The majority of this code comes from "Machine Learning with R" by Brett Lantz from Packt Publishing.
+## Learning to use SVM for the first time using the "kernlab" package.
+
+letters <- read.csv("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 7/letterdata.csv")
+
+letters_train <- letters[1:16000,]
+letters_test <- letters[16000:20000,]
+
+install.packages("kernlab")
+library("kernlab")
+
+# first model, gets a test error rate of 16%
+letters_classifier <- ksvm(letter ~ ., data = letters_train, kernel = "vanilladot")
+letters_predictions <- predict(letters_classifier, letters_test)
+agreement <- letters_predictions == letters_test$letter
+prop.table(table(agreement))
+
+# second model, now with non linear kernel and higher cost penalty, test error rate of 3%
+letters_classifier2 <- ksvm(letter ~ ., data = letters_train, kernel = "rbfdot", C = 10)
+letters_predictions2 <- predict(letters_classifier2, letters_test)
+agreement2 <- letters_predictions2 == letters_test$letter
+prop.table(table(agreement2))
