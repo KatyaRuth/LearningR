@@ -1,0 +1,27 @@
+
+
+teens <- read.csv("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 9/snsdata.csv")
+
+# deal with data to make it workable.
+teens$age <- ifelse(teens$age >= 13 & teens$age <= 20, teens$age, NA)
+teens$female <- ifelse(teens$gender == "F" & !is.na(teens$gender), 1, 0)
+teens$no_gender <- ifelse(is.na(teens$gender), 1, 0)
+# going to impute the missing age values
+aggregate(data = teens, age ~ gradyear, mean, na.rm=T)
+ave_age <- ave(teens$age, teens$gradyear, FUN = function(x) mean (x, na.rm=T))
+teens$age <- ifelse(is.na(teens$age), ave_age, teens$age)
+
+#starting some clustering attempts, first with gettting only numeric columns from frame
+#and then standardizing their ranges.
+interests <- teens[5:40]
+interests_z <- as.data.frame(lapply(interests, scale))
+teen_clusters <- kmeans(interests_z, 5)
+teen_clusters$size
+teen_clusters$centers
+teen_clusters2 <- kmeans(interests_z, 7)
+teen_clusters2$size
+teen_clusters2$centers
+# assign each user a cluster (1-5)
+teens$cluster <- teen_clusters$cluster
+# examine how M/F plays out in clusters
+aggregate(date = teens, female ~ cluster, mean)
