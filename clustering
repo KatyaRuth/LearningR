@@ -1,4 +1,6 @@
-
+## The majority of this code comes from "Machine Learning with R" by Brett Lantz from Packt Publishing.
+## Learning to use clustering based on 30,000 messages sent on a social networking site.
+## Some data wrangling involved
 
 teens <- read.csv("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 9/snsdata.csv")
 
