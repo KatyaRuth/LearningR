@@ -2,7 +2,7 @@
 ## The majority of this code comes from "Machine Learning with R" by Brett Lantz from Packt Publishing.
 ## Learning to use SVM for the first time using the "kernlab" package.
 
-letters <- read.csv("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 7/letterdata.csv")
+letters <- read.csv("letterdata.csv")
 
 letters_train <- letters[1:16000,]
 letters_test <- letters[16000:20000,]
