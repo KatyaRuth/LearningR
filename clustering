@@ -2,7 +2,7 @@
 ## Learning to use clustering based on 30,000 messages sent on a social networking site.
 ## Some data wrangling involved
 
-teens <- read.csv("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 9/snsdata.csv")
+teens <- read.csv("snsdata.csv")
 
 # deal with data to make it workable.
 teens$age <- ifelse(teens$age >= 13 & teens$age <= 20, teens$age, NA)
