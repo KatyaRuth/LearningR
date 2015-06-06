@@ -1,27 +1,28 @@
+## The majority of this code comes from "Machine Learning with R" by Brett Lantz from Packt Publishing.
+## Learning to use cross validation for the first time, as well as bagging (in this example over trees).
 
-
-
-
-
-credit <- read.csv("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 11/credit.csv")
+credit <- read.csv("credit.csv")
 
 library(caret)
 set.seed(300)
 m <- train(default ~ ., data = credit, method = "C5.0")
 p <- predict(m, credit)
 table(p, credit$default)
+
 # creating a simple, tuned model
 ctrl <- trainControl(method = "cv", number = 10, selectionFunction = "oneSE")
 grid <- expand.grid(.model = "tree", .trials = c(1,5,10,15,20,25,30,35), .winnow = "FALSE")
 set.seed(300)
 m <- train(default ~ ., data = credit, method = "C5.0", metric = "Kappa", trControl = ctrl,
            tuneGrid = grid)
+           
 # using bagging to average over (unstable) trees
 install.packages("ipred")
 set.seed(300)
 mybag <- bagging(default ~ ., data = credit, nbagg = 25)
 credit_pred <- predict(mybag, credit)
 table(credit_pred, credit$default)
+
 # use 10 fold cv to see how it performs out of sample.
 library(caret)
 set.seed(300)
