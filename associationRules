@@ -2,11 +2,8 @@
 ## Learning to use arules package for the first time.
 ## Looks for association rules in grocery purchases
 
-
 install.packages("arules")
-library(arules)
-
-groceries <- read.transactions("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 8/groceries.csv", sep = ",")
+groceries <- read.transactions("groceries.csv", sep = ",")
 
 itemFrequencyPlot(groceries, support = 0.1)
 itemFrequencyPlot(groceries, topN = 10)
