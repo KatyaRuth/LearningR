@@ -1,7 +1,7 @@
 ## The majority of this code comes from "Machine Learning with R" by Brett Lantz from Packt Publishing.
 ## Learning to use neural networks package to classify the strength of concrete.
 
-concrete <- read.csv("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 7/concrete.csv")
+concrete <- read.csv("concrete.csv")
 
 normalize <- function(x) {
     return ((x - min(x)) / (max(x) - min(x)))
