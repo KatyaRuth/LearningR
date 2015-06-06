@@ -2,7 +2,7 @@
 ## Learning to build (and visualize) regression trees using rpart and rpart.plot.
 
 
-wine <- read.csv("/Users/katyahandler1/Dropbox/MachineLearningWork/2148OS_code/chapter\ 6/whitewines.csv")
+wine <- read.csv("whitewines.csv")
 
 wine_train <- wine[1:3750,]
 wine_test <- wine[3751:4898,]
