@@ -21,3 +21,23 @@ letters_classifier2 <- ksvm(letter ~ ., data = letters_train, kernel = "rbfdot",
 letters_predictions2 <- predict(letters_classifier2, letters_test)
 agreement2 <- letters_predictions2 == letters_test$letter
 prop.table(table(agreement2))
+
+
+# let's estimate actual error for SVM using cv
+set.seed(123)
+folds <- createFolds(letters$letter, k = 5)
+cv_results <- lapply(folds, function(x) {
+    letters_train <- letters[x,]
+    letters_test <- letters[-x,]
+    letters_model <- ksvm(letter ~ ., data=letters_train, kernel = "rbfdot")
+    letters_pred <- predict(letters_model, letters_test)
+    #letters_actual <- letters_test$letters
+    agreement <- letters_pred == letters_test$letter
+    tables <- prop.table(table(agreement))
+    print(tables[1])
+})
+falseEst <- numeric(0)
+for(fold in cv_results) {
+    falseEst <- c(falseEst, fold)
+}
+ave(falseEst)
